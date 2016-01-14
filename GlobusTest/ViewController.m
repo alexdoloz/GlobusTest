@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "GTSegmentedControl.h"
+
 
 @interface ViewController ()
 
@@ -16,12 +18,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    GTSegmentedControl *sc = [[GTSegmentedControl alloc] initWithItems:@[
+        @"раз",
+        @"два",
+        @"три"
+    ]];
+    sc.center = CGPointMake(300, 300);
+    [self.view addSubview:sc];
 }
 
 @end

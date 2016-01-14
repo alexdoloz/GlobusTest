@@ -13,6 +13,7 @@
 		1132636C1C480E36003DE00F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1132636A1C480E36003DE00F /* Main.storyboard */; };
 		1132636E1C480E36003DE00F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1132636D1C480E36003DE00F /* Assets.xcassets */; };
 		113263711C480E36003DE00F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1132636F1C480E36003DE00F /* LaunchScreen.storyboard */; };
+		1132637A1C480E56003DE00F /* GTSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 113263791C480E56003DE00F /* GTSegmentedControl.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,8 @@
 		1132636D1C480E36003DE00F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		113263701C480E36003DE00F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		113263721C480E36003DE00F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		113263781C480E56003DE00F /* GTSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTSegmentedControl.h; sourceTree = "<group>"; };
+		113263791C480E56003DE00F /* GTSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTSegmentedControl.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +70,8 @@
 				1132636F1C480E36003DE00F /* LaunchScreen.storyboard */,
 				113263721C480E36003DE00F /* Info.plist */,
 				113263611C480E35003DE00F /* Supporting Files */,
+				113263781C480E56003DE00F /* GTSegmentedControl.h */,
+				113263791C480E56003DE00F /* GTSegmentedControl.m */,
 			);
 			path = GlobusTest;
 			sourceTree = "<group>";
@@ -152,6 +157,7 @@
 				113263691C480E36003DE00F /* ViewController.m in Sources */,
 				113263661C480E35003DE00F /* AppDelegate.m in Sources */,
 				113263631C480E35003DE00F /* main.m in Sources */,
+				1132637A1C480E56003DE00F /* GTSegmentedControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
