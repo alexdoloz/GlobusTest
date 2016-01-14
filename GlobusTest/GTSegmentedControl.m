@@ -26,13 +26,15 @@
 - (instancetype)initWithItems:(nullable NSArray *)items {
     self = [super init];
     if (self) {
+        self.tag = 999;
         _titles = [items copy];
         _segments = [NSMutableArray new];
-        _interitemSpacing = 5.0;
+        _interitemSpacing = 10.0;
         _lineThickness = 2.0;
         _inactiveSegmentColor = [UIColor grayColor];
         _activeSegmentColor = [UIColor greenColor];
         _segmentHeight = 44.0;
+        _selectedSegmentIndex = NSNotFound;
         [self addLine];
         [self addSegments];
     }
@@ -62,6 +64,7 @@
     [self addSubview:line];
     line.backgroundColor = self.inactiveSegmentColor;
     self.line = line;
+    line.tag = 999;
 }
 
 - (void)layoutSubviews {
@@ -72,7 +75,7 @@
         segment.layer.cornerRadius = 0.5 * self.segmentHeight;
         UILabel *segmentLabel = (UILabel *)[segment.subviews firstObject];
         [segmentLabel sizeToFit];
-        CGFloat width = MAX(segmentLabel.bounds.size.width, self.segmentHeight);
+        CGFloat width = MAX(segmentLabel.bounds.size.width + 16.0, self.segmentHeight);
         segment.frame = CGRectMake(0, 0, width, self.segmentHeight);
         segmentLabel.center = CGPointMake(CGRectGetMidX(segment.bounds), CGRectGetMidY(segment.bounds));
         segment.center = CGPointMake(nextOriginX + 0.5 * width, 0.5 * self.segmentHeight);
@@ -91,6 +94,9 @@
 //        BOOL isFirst = i == 0;
 //        BOOL isLast = i == self.titles.count - 1;
         UIView *segment = [self createSegmentForTitle:title];
+        segment.tag = i;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(segmentTapped:)];
+        [segment addGestureRecognizer:tap];
         [self.segments addObject:segment];
         [self addSubview:segment];
 //        [segment.heightAnchor constraintEqualToConstant:self.segmentHeight];
@@ -129,6 +135,36 @@
     
     segmentTitleLabel.textColor = self.activeSegmentColor;
     return segment;
+}
+
+- (void)segmentTapped:(UITapGestureRecognizer *)tap {
+    UIView *segment = tap.view;
+    NSInteger previousSelectedIndex = self.selectedSegmentIndex;
+    if (previousSelectedIndex == segment.tag) return;
+    self.selectedSegmentIndex = segment.tag;
+    [self deselectSegmentAtIndex:previousSelectedIndex];
+    [self selectSegmentAtIndex:self.selectedSegmentIndex];
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
+}
+
+- (void)deselectSegmentAtIndex:(NSInteger)index {
+    UIView *segment = [self viewWithTag:index];
+    if (!segment) return;
+    [UIView animateWithDuration:0.25 animations:^{
+        segment.backgroundColor = self.inactiveSegmentColor;
+        UILabel *segmentLabel = [segment.subviews firstObject];
+        segmentLabel.textColor = self.activeSegmentColor;
+    }];
+}
+
+- (void)selectSegmentAtIndex:(NSInteger)index {
+    UIView *segment = [self viewWithTag:index];
+    if (!segment) return;
+    [UIView animateWithDuration:0.25 animations:^{
+        segment.backgroundColor = self.activeSegmentColor;
+        UILabel *segmentLabel = [segment.subviews firstObject];
+        segmentLabel.textColor = self.inactiveSegmentColor;
+    }];
 }
 
 @end

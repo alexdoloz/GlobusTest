@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GlobusTest/GTSegmentedControl.m"
-            timestampString = "474490395.132887"
+            timestampString = "474492145.526159"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
-            landmarkName = "-initWithItems:"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
+            landmarkName = "-deselectSegmentAtIndex:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,28 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GlobusTest/GTSegmentedControl.m"
-            timestampString = "474490395.132887"
+            timestampString = "474492145.526159"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
-            landmarkName = "-addLine"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "GlobusTest/ViewController.m"
-            timestampString = "474487778.888179"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
+            landmarkName = "-selectSegmentAtIndex:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -58,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GlobusTest/GTSegmentedControl.m"
-            timestampString = "474490404.8786"
+            timestampString = "474492145.526159"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
-            landmarkName = "-layoutSubviews"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
+            landmarkName = "-deselectSegmentAtIndex:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

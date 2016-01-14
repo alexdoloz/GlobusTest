@@ -20,7 +20,7 @@
     [super viewDidLoad];
     GTSegmentedControl *sc = [[GTSegmentedControl alloc] initWithItems:@[
         @"раз",
-        @"два",
+        @"дваkljsfldk",
         @"три"
     ]];
     sc.center = CGPointMake(300, 300);
