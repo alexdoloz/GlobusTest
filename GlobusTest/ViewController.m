@@ -14,6 +14,7 @@
 
 @property (nonatomic) GTSegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet UILabel *selectedIndexLabel;
+@property (weak, nonatomic) IBOutlet GTSegmentedControl *ibSegmentedControl;
 
 @end
 
@@ -32,10 +33,11 @@
 }
 
 - (IBAction)insertPressed:(id)sender {
-    [self.segmentedControl insertSegmentWithTitle:@"Inserted" atIndex:0 animated:NO];
+    [self.segmentedControl insertSegmentWithTitle:@"Inserted" atIndex:[self randomIndex] animated:NO];
 }
 
 - (IBAction)appendPressed:(id)sender {
+    [self.segmentedControl insertSegmentWithTitle:@"Appended" atIndex:self.segmentedControl.numberOfSegments animated:NO];
 }
 
 - (void)viewDidLoad {
@@ -55,8 +57,11 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.segmentedControl.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
-//  [self.segmentedControl.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor constant:-500];
-//    [self.segmentedControl.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor];
+    [self.ibSegmentedControl insertSegmentWithTitle:@"123" atIndex:0 animated:NO];
+    
+    [self.ibSegmentedControl insertSegmentWithTitle:@"567" atIndex:0 animated:NO];
+    
+    [self.ibSegmentedControl insertSegmentWithTitle:@"891" atIndex:0 animated:NO];
 }
 
 - (void)valueChanged:(GTSegmentedControl *)sender {

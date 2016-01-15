@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-
+IB_DESIGNABLE
 @interface GTSegmentedControl : UIControl
 
-- (instancetype)initWithItems:(nullable NSArray *)items;
+- (_Nonnull instancetype)initWithItems:(nullable NSArray *)items;
 
 @property(nonatomic) NSInteger selectedSegmentIndex;
 @property(nonatomic, readonly) NSUInteger numberOfSegments;
@@ -24,10 +24,10 @@
 //- (nullable NSString *)titleForSegmentAtIndex:(NSUInteger)segment;
 
 
-@property (nonatomic) CGFloat segmentHeight;
-@property (nonatomic) CGFloat interitemSpacing;
-@property (nonatomic) CGFloat lineThickness;
-@property (nonatomic, nullable) UIColor *inactiveSegmentColor;
-@property (nonatomic, nullable) UIColor *activeSegmentColor;
+@property (nonatomic) IBInspectable CGFloat segmentHeight;
+@property (nonatomic) IBInspectable CGFloat interitemSpacing;
+@property (nonatomic) IBInspectable CGFloat lineThickness;
+@property (nonatomic, nullable) IBInspectable UIColor *inactiveSegmentColor;
+@property (nonatomic, nullable) IBInspectable UIColor *activeSegmentColor;
 
 @end

@@ -28,26 +28,31 @@
 - (instancetype)initWithItems:(nullable NSArray *)items {
     self = [super init];
     if (self) {
-        self.tag = 999;
         _titles = [items mutableCopy];
-        _segments = [NSMutableArray new];
-        _interitemSpacing = 10.0;
-        _lineThickness = 2.0;
-        _inactiveSegmentColor = [UIColor grayColor];
-        _activeSegmentColor = [UIColor greenColor];
-        _segmentHeight = 44.0;
-        _selectedSegmentIndex = NSNotFound;
-        [self addLine];
-        [self addSegments];
+        [self commonInit];
+        
     }
     return self;
+}
+
+- (void)commonInit {
+    _segments = [NSMutableArray new];
+    _interitemSpacing = 10.0;
+    _lineThickness = 2.0;
+    _inactiveSegmentColor = [UIColor grayColor];
+    _activeSegmentColor = [UIColor greenColor];
+    _segmentHeight = 44.0;
+    _selectedSegmentIndex = NSNotFound;
+    [self addLine];
+    [self addSegments];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
+        _titles = [NSMutableArray new];
+        [self commonInit];
     }
     return self;
 }
@@ -56,7 +61,8 @@
 {
     self = [super initWithCoder:coder];
     if (self) {
-        
+        _titles = [NSMutableArray new];
+        [self commonInit];
     }
     return self;
 }
@@ -195,6 +201,14 @@
     for (NSInteger i = 0; i < count; i++) {
         [self removeSegmentAtIndex:0 animated:NO];
     }
+}
+
+#pragma mark - IBDesignable
+
+- (void)prepareForInterfaceBuilder {
+    [self insertSegmentWithTitle:@"три" atIndex:0 animated:NO];
+    [self insertSegmentWithTitle:@"два" atIndex:0 animated:NO];
+    [self insertSegmentWithTitle:@"один" atIndex:0 animated:NO];
 }
 
 
