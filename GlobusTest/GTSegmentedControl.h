@@ -19,9 +19,9 @@
 - (void)insertSegmentWithTitle:(nullable NSString *)title atIndex:(NSUInteger)segment animated:(BOOL)animated;
 - (void)removeSegmentAtIndex:(NSUInteger)segment animated:(BOOL)animated;
 - (void)removeAllSegments;
-- (void)setTitle:(nullable NSString *)title
-    forSegmentAtIndex:(NSUInteger)segment;
-- (nullable NSString *)titleForSegmentAtIndex:(NSUInteger)segment;
+//- (void)setTitle:(nullable NSString *)title
+//    forSegmentAtIndex:(NSUInteger)segment;
+//- (nullable NSString *)titleForSegmentAtIndex:(NSUInteger)segment;
 
 
 @property (nonatomic) CGFloat segmentHeight;

@@ -16,6 +16,8 @@
 @property (nonatomic) NSMutableArray *segments;
 @property (nonatomic) UIView *line;
 
+@property (nonatomic, weak) UIView *selectedSegment;
+
 @end
 
 
@@ -81,7 +83,7 @@
         segment.center = CGPointMake(nextOriginX + 0.5 * width, 0.5 * self.segmentHeight);
         nextOriginX += width + self.interitemSpacing;
     }
-    self.frame = CGRectMake(0, 0, nextOriginX - self.interitemSpacing, self.segmentHeight);
+    self.frame = CGRectMake(100, 100, nextOriginX - self.interitemSpacing, self.segmentHeight);
     self.center = center;
     self.line.frame = CGRectMake(0, 0, self.bounds.size.width - 4.0, self.lineThickness);
     self.line.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
@@ -91,46 +93,19 @@
 - (void)addSegments {
     for (NSInteger i = 0; i < self.titles.count; i++) {
         NSString *title = self.titles[i];
-//        
-//        BOOL isFirst = i == 0;
-//        BOOL isLast = i == self.titles.count - 1;
         UIView *segment = [self createSegmentForTitle:title];
-        segment.tag = i;
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(segmentTapped:)];
-        [segment addGestureRecognizer:tap];
         [self.segments addObject:segment];
-        [self addSubview:segment];
-//        [segment.heightAnchor constraintEqualToConstant:self.segmentHeight];
-//        [segment.topAnchor constraintEqualToAnchor:self.topAnchor];
-//        [segment.bottomAnchor constraintEqualToAnchor:self.bottomAnchor];
-//        
-//        if (isFirst) {
-//            [segment.leftAnchor constraintEqualToAnchor:self.leftAnchor];
-//        }
-//        if (isLast) {
-//            [segment.rightAnchor constraintEqualToAnchor:self.rightAnchor];
-//        }
-//        if (!isFirst) {
-//            UIView *previousSegment = self.segments[i - 1];
-//            [previousSegment.rightAnchor constraintEqualToAnchor:segment.leftAnchor constant:self.interitemSpacing];
-//        }
     }
 }
 
 - (UIView *)createSegmentForTitle:(NSString *)title {
     UIView *segment = [[UIView alloc] init];
+    [self addSubview:segment];
     UILabel *segmentTitleLabel = [[UILabel alloc] init];
     segmentTitleLabel.text = title;
-//    [segmentTitleLabel sizeToFit];
     [segment addSubview:segmentTitleLabel];
-//    [segmentTitleLabel.centerXAnchor constraintEqualToAnchor:segment.centerXAnchor];
-//    [segmentTitleLabel.centerYAnchor constraintEqualToAnchor:segment.centerYAnchor];
-//    
-//
-//    [segmentTitleLabel.leftAnchor constraintEqualToAnchor:segment.leftAnchor];
-//    [segmentTitleLabel.rightAnchor constraintEqualToAnchor:segment.rightAnchor];
-//    [segmentTitleLabel.topAnchor constraintEqualToAnchor:segment.topAnchor];
-//    [segmentTitleLabel.bottomAnchor constraintEqualToAnchor:segment.bottomAnchor];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(segmentTapped:)];
+    [segment addGestureRecognizer:tap];
     segment.backgroundColor = self.inactiveSegmentColor;
     segment.layer.cornerRadius = 0.5 * self.segmentHeight;
     
@@ -140,12 +115,10 @@
 
 - (void)segmentTapped:(UITapGestureRecognizer *)tap {
     UIView *segment = tap.view;
-    NSInteger index = [self.segments indexOfObject:segment];
-    self.selectedSegmentIndex = index;
+    self.selectedSegment = segment;
 }
 
 - (void)deselectSegmentAtIndex:(NSInteger)index {
-//    NSParameterAssert(index < self.segments.count && index >= 0);
     if (index == NSNotFound) return;
     UIView *segment = self.segments[index];
     segment.backgroundColor = self.inactiveSegmentColor;
@@ -154,7 +127,6 @@
 }
 
 - (void)selectSegmentAtIndex:(NSInteger)index {
-//    NSParameterAssert(index < self.segments.count && index >= 0);
     if (index == NSNotFound) return;
     UIView *segment = self.segments[index];
     segment.backgroundColor = self.activeSegmentColor;
@@ -162,20 +134,41 @@
     segmentLabel.textColor = self.inactiveSegmentColor;
 }
 
-- (void)removeSegmentAtIndex:(NSUInteger)index animated:(BOOL)animated {
-    if (index >= self.titles.count) return;
-    [self.titles removeObjectAtIndex:index];
-    [self.segments[index] removeFromSuperview];
-    [self.segments removeObjectAtIndex:index];
-    self.selectedSegmentIndex = NSNotFound;
-    [self setNeedsLayout];
+- (void)deselectAll {
+    for (NSInteger i = 0; i < self.segments.count; i++) {
+        [self deselectSegmentAtIndex:i];
+    }
 }
 
-- (void)removeAllSegments {
-    NSUInteger count = self.titles.count;
-    for (NSInteger i = 0; i < count; i++) {
-        [self removeSegmentAtIndex:0 animated:NO];
-    }
+- (void)setSelectedSegment:(UIView *)selectedSegment {
+    if (selectedSegment == _selectedSegment) return;
+    _selectedSegment = selectedSegment;
+    NSUInteger index = [self.segments indexOfObject:selectedSegment];
+    self.selectedSegmentIndex = index;
+}
+
+- (void)refreshSelection {
+    self.selectedSegment = self.selectedSegment;
+}
+
+- (void)resetSelection {
+    self.selectedSegment = nil;
+}
+
+#pragma mark - Public
+
+- (NSUInteger)numberOfSegments {
+    return self.titles.count;
+}
+
+- (void)insertSegmentWithTitle:(NSString *)title atIndex:(NSUInteger)index animated:(BOOL)animated {
+    if (index > self.titles.count) return;
+    UIView *segment = [self createSegmentForTitle:title];
+    [self.segments insertObject:segment atIndex:index];
+    [self.titles insertObject:title atIndex:index];
+
+    [self setNeedsLayout];
+    [self resetSelection];
 }
 
 - (void)setSelectedSegmentIndex:(NSInteger)selectedSegmentIndex {
@@ -186,14 +179,23 @@
     [self sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
-- (void)deselectAll {
-    for (NSInteger i = 0; i < self.segments.count; i++) {
-        [self deselectSegmentAtIndex:i];
+
+- (void)removeSegmentAtIndex:(NSUInteger)index animated:(BOOL)animated {
+    if (index >= self.titles.count) return;
+    [self.titles removeObjectAtIndex:index];
+    [self.segments[index] removeFromSuperview];
+    [self.segments removeObjectAtIndex:index];
+    self.selectedSegmentIndex = NSNotFound;
+    [self setNeedsLayout];
+    [self resetSelection];
+}
+
+- (void)removeAllSegments {
+    NSUInteger count = self.titles.count;
+    for (NSInteger i = 0; i < count; i++) {
+        [self removeSegmentAtIndex:0 animated:NO];
     }
 }
 
-- (NSUInteger)numberOfSegments {
-    return self.titles.count;
-}
 
 @end
