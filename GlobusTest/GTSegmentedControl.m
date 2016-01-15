@@ -85,6 +85,7 @@
     self.center = center;
     self.line.frame = CGRectMake(0, 0, self.bounds.size.width - 4.0, self.lineThickness);
     self.line.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+    self.line.hidden = self.numberOfSegments == 0;
 }
 
 - (void)addSegments {
@@ -161,12 +162,20 @@
     segmentLabel.textColor = self.inactiveSegmentColor;
 }
 
-- (void)removeSegmentAtIndex:(NSUInteger)segment animated:(BOOL)animated {
-    [self.titles removeObjectAtIndex:segment];
-    [self.segments[segment] removeFromSuperview];
-    [self.segments removeObjectAtIndex:segment];
+- (void)removeSegmentAtIndex:(NSUInteger)index animated:(BOOL)animated {
+    if (index >= self.titles.count) return;
+    [self.titles removeObjectAtIndex:index];
+    [self.segments[index] removeFromSuperview];
+    [self.segments removeObjectAtIndex:index];
     self.selectedSegmentIndex = NSNotFound;
     [self setNeedsLayout];
+}
+
+- (void)removeAllSegments {
+    NSUInteger count = self.titles.count;
+    for (NSInteger i = 0; i < count; i++) {
+        [self removeSegmentAtIndex:0 animated:NO];
+    }
 }
 
 - (void)setSelectedSegmentIndex:(NSInteger)selectedSegmentIndex {
@@ -181,6 +190,10 @@
     for (NSInteger i = 0; i < self.segments.count; i++) {
         [self deselectSegmentAtIndex:i];
     }
+}
+
+- (NSUInteger)numberOfSegments {
+    return self.titles.count;
 }
 
 @end

@@ -14,19 +14,46 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8R8-4A-9za">
-                                <rect key="frame" x="157" y="250" width="55" height="30"/>
-                                <state key="normal" title="Remove"/>
-                                <connections>
-                                    <action selector="removePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="EIe-fa-TsI"/>
-                                </connections>
-                            </button>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s9k-Qd-0DC">
+                                <rect key="frame" x="0.0" y="692" width="414" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="neN-c7-eZm"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem title="Remove" id="sc5-xf-FJC">
+                                        <connections>
+                                            <action selector="removePressed:" destination="BYZ-38-t0r" id="fTS-Am-VPd"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Remove all" id="4lz-aW-2n5">
+                                        <connections>
+                                            <action selector="removeAllPressed:" destination="BYZ-38-t0r" id="2p5-0h-p1y"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Insert" id="gxG-mq-Nqr">
+                                        <connections>
+                                            <action selector="insertPressed:" destination="BYZ-38-t0r" id="CyX-FN-UZy"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Append" id="VrC-2w-59j">
+                                        <connections>
+                                            <action selector="appendPressed:" destination="BYZ-38-t0r" id="4ww-6S-Jse"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="s9k-Qd-0DC" secondAttribute="trailing" id="7hb-so-UOA"/>
+                            <constraint firstItem="s9k-Qd-0DC" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="FPH-RZ-n2L"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="s9k-Qd-0DC" secondAttribute="bottom" id="RyC-hi-Fgy"/>
+                        </constraints>
                     </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

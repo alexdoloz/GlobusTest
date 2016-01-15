@@ -19,7 +19,21 @@
 @implementation ViewController
 
 - (IBAction)removePressed:(id)sender {
-    [self.segmentedControl removeSegmentAtIndex:0 animated:YES];
+    [self.segmentedControl removeSegmentAtIndex:[self randomIndex] animated:YES];
+}
+
+- (NSInteger)randomIndex {
+     return (NSInteger)arc4random_uniform((u_int32_t)self.segmentedControl.numberOfSegments);
+}
+
+- (IBAction)removeAllPressed:(id)sender {
+    [self.segmentedControl removeAllSegments];
+}
+
+- (IBAction)insertPressed:(id)sender {
+}
+
+- (IBAction)appendPressed:(id)sender {
 }
 
 - (void)viewDidLoad {
