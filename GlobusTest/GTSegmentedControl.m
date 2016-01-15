@@ -27,7 +27,7 @@
     self = [super init];
     if (self) {
         self.tag = 999;
-        _titles = [items copy];
+        _titles = [items mutableCopy];
         _segments = [NSMutableArray new];
         _interitemSpacing = 10.0;
         _lineThickness = 2.0;
@@ -139,32 +139,48 @@
 
 - (void)segmentTapped:(UITapGestureRecognizer *)tap {
     UIView *segment = tap.view;
-    NSInteger previousSelectedIndex = self.selectedSegmentIndex;
-    if (previousSelectedIndex == segment.tag) return;
-    self.selectedSegmentIndex = segment.tag;
-    [self deselectSegmentAtIndex:previousSelectedIndex];
-    [self selectSegmentAtIndex:self.selectedSegmentIndex];
-    [self sendActionsForControlEvents:UIControlEventValueChanged];
+    NSInteger index = [self.segments indexOfObject:segment];
+    self.selectedSegmentIndex = index;
 }
 
 - (void)deselectSegmentAtIndex:(NSInteger)index {
-    UIView *segment = [self viewWithTag:index];
-    if (!segment) return;
-    [UIView animateWithDuration:0.25 animations:^{
-        segment.backgroundColor = self.inactiveSegmentColor;
-        UILabel *segmentLabel = [segment.subviews firstObject];
-        segmentLabel.textColor = self.activeSegmentColor;
-    }];
+//    NSParameterAssert(index < self.segments.count && index >= 0);
+    if (index == NSNotFound) return;
+    UIView *segment = self.segments[index];
+    segment.backgroundColor = self.inactiveSegmentColor;
+    UILabel *segmentLabel = [segment.subviews firstObject];
+    segmentLabel.textColor = self.activeSegmentColor;
 }
 
 - (void)selectSegmentAtIndex:(NSInteger)index {
-    UIView *segment = [self viewWithTag:index];
-    if (!segment) return;
-    [UIView animateWithDuration:0.25 animations:^{
-        segment.backgroundColor = self.activeSegmentColor;
-        UILabel *segmentLabel = [segment.subviews firstObject];
-        segmentLabel.textColor = self.inactiveSegmentColor;
-    }];
+//    NSParameterAssert(index < self.segments.count && index >= 0);
+    if (index == NSNotFound) return;
+    UIView *segment = self.segments[index];
+    segment.backgroundColor = self.activeSegmentColor;
+    UILabel *segmentLabel = [segment.subviews firstObject];
+    segmentLabel.textColor = self.inactiveSegmentColor;
+}
+
+- (void)removeSegmentAtIndex:(NSUInteger)segment animated:(BOOL)animated {
+    [self.titles removeObjectAtIndex:segment];
+    [self.segments[segment] removeFromSuperview];
+    [self.segments removeObjectAtIndex:segment];
+    self.selectedSegmentIndex = NSNotFound;
+    [self setNeedsLayout];
+}
+
+- (void)setSelectedSegmentIndex:(NSInteger)selectedSegmentIndex {
+    if ((selectedSegmentIndex == _selectedSegmentIndex || selectedSegmentIndex >= self.titles.count || selectedSegmentIndex < 0) && selectedSegmentIndex != NSNotFound) return;
+    [self deselectAll];
+    [self selectSegmentAtIndex:selectedSegmentIndex];
+    _selectedSegmentIndex = selectedSegmentIndex;
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
+}
+
+- (void)deselectAll {
+    for (NSInteger i = 0; i < self.segments.count; i++) {
+        [self deselectSegmentAtIndex:i];
+    }
 }
 
 @end

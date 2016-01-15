@@ -12,9 +12,15 @@
 
 @interface ViewController ()
 
+@property (nonatomic) GTSegmentedControl *segmentedControl;
+
 @end
 
 @implementation ViewController
+
+- (IBAction)removePressed:(id)sender {
+    [self.segmentedControl removeSegmentAtIndex:0 animated:YES];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -25,6 +31,7 @@
     ]];
     sc.center = CGPointMake(300, 300);
     [self.view addSubview:sc];
+    self.segmentedControl = sc;
 }
 
 @end
